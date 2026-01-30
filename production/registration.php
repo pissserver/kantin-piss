@@ -1,4 +1,7 @@
-<?php include "connection.php"; ?>
+<?php
+require_once 'auth.php';
+?>
+
 
 <!doctype html>
 <html lang="en">

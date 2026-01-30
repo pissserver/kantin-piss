@@ -33,7 +33,7 @@ $data = mysqli_fetch_assoc($q);
 
 <div class="center">
     <strong>KANTIN PISS</strong><br><br><br>
-    Bukti Pembayaran<br>
+    Bukti Pembayaran Tenant<br>
     <div class="line"></div>
 </div>
 
@@ -64,7 +64,7 @@ $data = mysqli_fetch_assoc($q);
 <div class="line"></div>
 
 <div class="center">
-    Terima Kasih
+    Terima Kasih!
 </div>
 
 </body>

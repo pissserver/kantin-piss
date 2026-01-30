@@ -1,5 +1,6 @@
 <?php
-    include 'connection.php';
+    require_once 'auth.php';
+    require_once 'connection.php';
 
     $id = isset($_GET['id']) ? $_GET['id'] : '';
     $date_now = date("Y-m-d");
@@ -390,7 +391,7 @@
                                         </div>
                                         <div class="panel-body">
                                             <!-- CONTAINER AJAX -->
-                                            <div id="payment-tenant-data">
+                                            <div id="payment-tenant-data" style="overflow-x: auto;">
                                                 <div style="text-align:center; padding:20px;">
                                                     Memuat data...
                                                 </div>
@@ -409,7 +410,7 @@
                                         </div>
                                         <div class="panel-body">
                                             <!-- CONTAINER AJAX -->
-                                            <div id="payment-electric-data">
+                                            <div id="payment-electric-data" style="overflow-x: auto;">
                                                 <div style="text-align:center; padding:20px;">
                                                     Memuat data...
                                                 </div>

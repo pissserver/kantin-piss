@@ -36,6 +36,7 @@ $no = $start + 1;
             <th style="text-align:center;">Tanggal</th>
             <th style="text-align:center;">Biaya Pembayaran</th>
             <th style="text-align:center;">Status</th>
+            <th style="text-align:center;">Aksi</th>
         </tr>
     </thead>
     <tbody>
@@ -60,9 +61,17 @@ $no = $start + 1;
                 </td>
                 <td align="center" style="vertical-align: middle;">
                     <span class="label <?php echo ($status == 'lunas') ? 'label-success' : 'label-danger'; ?>"
-                        style="text-transform:capitalize;">
-                        <?php echo $row['status_payment']; ?>
+                    style="text-transform:capitalize;">
+                    <?php echo $row['status_payment']; ?>
                     </span>
+                </td>
+                <td align="center" style="vertical-align: middle;">
+                    <a href="payment_electric_print.php?payment_id=<?php echo $row['id']; ?>"
+                    target="_blank"
+                    class="btn btn-primary btn-xs"
+                    style="padding:5px 10px; border-radius:20px;">
+                    <i class="fa fa-print"></i> Cetak
+                    </a>
                 </td>
             </tr>
             <?php } ?>
