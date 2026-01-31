@@ -1,8 +1,7 @@
 <!-- footer content -->
 <footer>
     <div class="pull-right">
-        Gentelella - Bootstrap Admin Template by
-        <a href="https://colorlib.com">Colorlib</a>
+        ©2026 All Rights Reserved. Kantin PISS - Pasar Induk Surabaya Sidotopo
     </div>
     <div class="clearfix"></div>
 </footer>

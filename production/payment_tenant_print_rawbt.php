@@ -3,6 +3,7 @@ session_start();
 require_once 'connection.php';
 
 $payment_id = $_GET['payment_id'];
+$fullname  = $_GET['user'];
 
 $q = mysqli_query($conn, "
     SELECT tp.*, t.tenant_name
@@ -10,11 +11,6 @@ $q = mysqli_query($conn, "
     JOIN tenants t ON tp.tenant_id = t.id
     WHERE tp.id = '$payment_id'
 ");
-
-$nama_user  = $_SESSION['username'];
-// Ambil data user
-$user_q = mysqli_query($conn, "SELECT fullname FROM users WHERE username = '$nama_user'");
-$user = mysqli_fetch_assoc($user_q);
 
 $data = mysqli_fetch_assoc($q);
 ?>
@@ -35,7 +31,8 @@ $data = mysqli_fetch_assoc($q);
         table { width: 100%; }
     </style>
 </head>
-<body onload="window.print()">
+<!-- <body onload="window.print()"> -->
+<body>
 
 <div class="center">
     <strong>KANTIN PISS</strong><br><br><br>
@@ -54,7 +51,7 @@ $data = mysqli_fetch_assoc($q);
     </tr>
     <tr>
         <td>Kasir</td>
-        <td>: <?php echo $user['fullname']; ?></td>
+        <td>: <?php echo $fullname; ?></td>
     </tr>
 </table>
 

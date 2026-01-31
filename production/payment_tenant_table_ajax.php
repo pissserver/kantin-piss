@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'connection.php';
 
 $tenant_id = $_POST['tenant_id'];
@@ -65,8 +66,15 @@ $no = $start + 1;
                     <?php echo $row['status_payment']; ?>
                     </span>
                 </td>
+
+                <?php
+                    $nama_user  = $_SESSION['username'];
+                    // Ambil data user
+                    $user_q = mysqli_query($conn, "SELECT fullname FROM users WHERE username = '$nama_user'");
+                    $user = mysqli_fetch_assoc($user_q);
+                ?>
                 <td align="center" style="vertical-align: middle;">
-                    <a href="payment_tenant_print_rawbt.php?payment_id=<?php echo $row['id']; ?>"
+                    <a href="payment_tenant_print_rawbt.php?payment_id=<?php echo $row['id']; ?>&user=<?php echo $user['fullname']; ?>"
                     target="_blank"
                     class="btn btn-primary btn-xs"
                     style="padding:5px 10px; border-radius:20px;">

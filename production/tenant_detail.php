@@ -136,7 +136,7 @@
                 <div class="right_col" role="main">
                     <!-- PROFILE TENANT -->
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="tenant-profile">
                                 <div class="profile-icon">
                                     <i class="fa fa-cutlery"></i>
@@ -149,7 +149,9 @@
                                         <i class="fa fa-calendar"></i>
                                         <?php echo date("d M Y",
                                         strtotime($row['registration_date']));
-                                        ?>
+                                        ?> | &nbsp;
+                                        <i class="text-<?php echo $row['status'] == 'active' ? 'success' : 'danger'; ?> fa fa-<?php echo $row['status'] == 'active' ? 'check-circle' : 'times-circle'; ?>"></i>
+                                        <?php echo $row['status']; ?>
                                     </p>
                                 </div>
                             </div>
@@ -161,7 +163,7 @@
                     <div class="row">
                         <!-- ABSEN -->
                         <div class="col-md-4 col-sm-12 col-xs-12">
-                            <div class="panel panel-default tenant-form">
+                            <div class="panel panel-primary tenant-form">
                                 <div class="panel-heading">
                                     <i class="fa fa-calendar-check-o"></i> Form
                                     Absen
@@ -227,7 +229,7 @@
 
                         <!-- PEMBAYARAN TENANT-->
                         <div class="col-md-4 col-sm-12 col-xs-12">
-                            <div class="panel panel-default tenant-form">
+                            <div class="panel panel-primary tenant-form">
                                 <div class="panel-heading">
                                     <i class="fa fa-money"></i> Pembayaran
                                     Tenant
@@ -282,7 +284,7 @@
 
                         <!-- AIR & LISTRIK -->
                         <div class="col-md-4 col-sm-12 col-xs-12">
-                            <div class="panel panel-default tenant-form">
+                            <div class="panel panel-primary tenant-form">
                                 <div class="panel-heading">
                                     <i class="fa fa-tint"></i> Air & Listrik
                                 </div>
@@ -366,7 +368,7 @@
                                     class="tab-pane fade in active"
                                     id="tab_absen"
                                 >
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             <strong>Riwayat Absen</strong>
                                         </div>
@@ -383,7 +385,7 @@
 
                                 <!-- TAB PEMBAYARAN TENANT -->
                                 <div class="tab-pane fade" id="tab_payment">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             <strong
                                                 >Riwayat Pembayaran
@@ -403,7 +405,7 @@
 
                                 <!-- TAB AIR & LISTRIK -->
                                 <div class="tab-pane fade" id="tab_utility">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             <strong
                                                 >Riwayat Air & Listrik</strong
