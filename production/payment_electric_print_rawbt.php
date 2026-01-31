@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'connection.php';
 
 $payment_id = $_GET['payment_id'];
@@ -9,6 +10,11 @@ $q = mysqli_query($conn, "
     JOIN tenants t ON ep.tenant_id = t.id
     WHERE ep.id = '$payment_id'
 ");
+
+$nama_user  = $_SESSION['username'];
+// Ambil data user
+$user_q = mysqli_query($conn, "SELECT fullname FROM users WHERE username = '$nama_user'");
+$user = mysqli_fetch_assoc($user_q);
 
 $data = mysqli_fetch_assoc($q);
 ?>
@@ -46,6 +52,10 @@ $data = mysqli_fetch_assoc($q);
     <tr>
         <td>Tanggal</td>
         <td>: <?php echo date('d M Y', strtotime($data['payment_date'])); ?></td>
+    </tr>
+    <tr>
+        <td>Kasir</td>
+        <td>: <?php echo $user['fullname']; ?></td>
     </tr>
 </table>
 

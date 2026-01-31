@@ -66,7 +66,7 @@ $no = $start + 1;
                     </span>
                 </td>
                 <td align="center" style="vertical-align: middle;">
-                    <a href="payment_electric_print.php?payment_id=<?php echo $row['id']; ?>"
+                    <a href="payment_electric_print_rawbt.php?payment_id=<?php echo $row['id']; ?>"
                     target="_blank"
                     class="btn btn-primary btn-xs"
                     style="padding:5px 10px; border-radius:20px;">
