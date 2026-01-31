@@ -1,48 +1,81 @@
 <?php
-require_once 'connection.php';
 session_start();
+require_once 'connection.php';
 
 $payment_id = $_GET['payment_id'];
-$nama_user  = $_SESSION['username'];
 
-// Ambil data user
-$user_q = mysqli_query($conn, "SELECT fullname FROM users WHERE username = '$nama_user'");
-$user = mysqli_fetch_assoc($user_q);
-
-// Ambil data payment
 $q = mysqli_query($conn, "
     SELECT tp.*, t.tenant_name
     FROM tenant_payments tp
     JOIN tenants t ON tp.tenant_id = t.id
     WHERE tp.id = '$payment_id'
 ");
+
+$nama_user  = $_SESSION['username'];
+// Ambil data user
+$user_q = mysqli_query($conn, "SELECT fullname FROM users WHERE username = '$nama_user'");
+$user = mysqli_fetch_assoc($user_q);
+
 $data = mysqli_fetch_assoc($q);
+?>
 
-// Header raw text supaya RawBT bisa fetch
-header("Content-Type: text/plain; charset=UTF-8");
-header("Cache-Control: no-cache");
 
-// ESC/POS
-echo "\x1B\x40";          // Initialize
-echo "\x1B\x61\x01";       // Center
-echo "\x1B\x45\x01";       // Bold
-echo "KANTIN PISS\n";
-echo "\x1B\x45\x00";       // Normal
-echo "Bukti Pembayaran Tenant\n";
-echo "------------------------------\n";
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Struk Pembayaran</title>
+    <style>
+        body {
+            width: 58mm;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .center { text-align: center; }
+        .line { border-top: 1px dashed #000; margin: 5px 0; }
+        table { width: 100%; }
+    </style>
+</head>
+<body onload="window.print()">
 
-echo "\x1B\x61\x00";       // Left align
-echo "Tenant  : " . $data['tenant_name'] . "\n";
-echo "Tanggal : " . date('d M Y', strtotime($data['payment_date'])) . "\n";
-echo "Kasir   : " . $user['fullname'] . "\n";
+<div class="center">
+    <strong>KANTIN PISS</strong><br><br><br>
+    Bukti Pembayaran Tenant<br>
+    <div class="line"></div>
+</div>
 
-echo "------------------------------\n";
-echo "\x1B\x45\x01";       // Bold
-echo "TOTAL   : Rp " . number_format($data['cost_payment'], 0, ',', '.') . "\n";
-echo "\x1B\x45\x00";       // Normal
-echo "Status  : " . strtoupper($data['status_payment']) . "\n";
+<table>
+    <tr>
+        <td>Tenant</td>
+        <td>: <?php echo $data['tenant_name']; ?></td>
+    </tr>
+    <tr>
+        <td>Tanggal</td>
+        <td>: <?php echo date('d M Y', strtotime($data['payment_date'])); ?></td>
+    </tr>
+    <tr>
+        <td>Kasir</td>
+        <td>: <?php echo $user['fullname']; ?></td>
+    </tr>
+</table>
 
-echo "------------------------------\n";
-echo "\x1B\x61\x01";       // Center
-echo "Terima Kasih\n\n";
-echo "\x1D\x56\x00";       // Cut paper
+<div class="line"></div>
+
+<table>
+    <tr>
+        <td>Total</td>
+        <td align="right"><?php echo format_rupiah($data['cost_payment']); ?></td>
+    </tr>
+    <tr>
+        <td>Status</td>
+        <td align="right"><?php echo strtoupper($data['status_payment']); ?></td>
+    </tr>
+</table>
+
+<div class="line"></div>
+
+<div class="center">
+    Terima Kasih!
+</div>
+
+</body>
+</html>
