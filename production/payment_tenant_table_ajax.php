@@ -66,8 +66,7 @@ $no = $start + 1;
                     </span>
                 </td>
                 <td align="center" style="vertical-align: middle;">
-                    <a href="payment_tenant_print.php?payment_id=<?php echo $row['id']; ?>"
-                    target="_blank"
+                    <a href="intent://print/payment_tenant_print_rawbt.php?payment_id=<?php echo $row['id']; ?>#Intent;scheme=rawbt;package=ru.a402d.rawbtprinter;type=text/plain;end;"
                     class="btn btn-primary btn-xs"
                     style="padding:5px 10px; border-radius:20px;">
                     <i class="fa fa-print"></i> Cetak

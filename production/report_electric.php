@@ -69,7 +69,8 @@ require_once 'auth.php';
                         <div class="page-title">
                             <div class="title_left">
                                 <h3>
-                                    Laporan Absensi&nbsp;<i
+                                    Laporan Pembayaran Air & Listrik
+                                    &nbsp;<i
                                         class="fa fa-file-text"
                                     ></i>
                                 </h3>
@@ -79,19 +80,18 @@ require_once 'auth.php';
 
                         <div class="clearfix"></div>
 
-                        <!-- Report Presence -->
+                        <!-- All Tenant -->
                         <div class="row">
-                            <!-- All Tenant -->
-                            <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="panel panel-primary tenant-form">
                                     <div class="panel-heading">
-                                        <i class="fa fa-file-text"></i>
-                                        Laporan Absensi Semua Tenant
+                                        <i class="fa fa-file-text"></i>&nbsp;
+                                        Semua Tenant
                                     </div>
                                     <div class="panel-body">
                                         <form
                                             method="POST"
-                                            action="report/report_presence_all.php" target="_blank"
+                                            action="report/report_payment_electric_all.php" target="_blank"
                                         >
                                             <input
                                                 type="hidden"
@@ -121,80 +121,6 @@ require_once 'auth.php';
                                                             class="form-control"
                                                             required
                                                         />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            
-                                            <button
-                                                type="submit"
-                                                class="btn btn-success btn-block btn-sm"
-                                            >
-                                                Lihat PDF &nbsp;<i
-                                                    class="fa fa-file-pdf-o"
-                                                ></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Per Tenant -->
-                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                <div class="panel panel-primary tenant-form">
-                                    <div class="panel-heading">
-                                        <i class="fa fa-file-text"></i>
-                                        Laporan Absensi Per-Tenant
-                                    </div>
-                                    <div class="panel-body">
-                                        <form
-                                            method="POST"
-                                            action="report/report_presence_one.php" target="_blank"
-                                        >
-                                            <input
-                                                type="hidden"
-                                                name="tenant_id"
-                                                value="<?php echo $tenant_id; ?>"
-                                            />
-
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <!-- TANGGAL Awal-->
-                                                    <div class="col-xs-6">
-                                                        <label>Tanggal Awal</label>
-                                                        <input
-                                                        type="date"
-                                                        name="first_date"
-                                                        class="form-control"
-                                                        required
-                                                        />
-                                                    </div>
-                                                    
-                                                    <!-- TANGGAL Akhir-->
-                                                    <div class="col-xs-6">
-                                                        <label>Tanggal Akhir</label>
-                                                        <input
-                                                            type="date"
-                                                            name="last_date"
-                                                            class="form-control"
-                                                            required
-                                                        />
-                                                    </div>
-                                                </div><br>
-
-                                                <div class="row">
-                                                    <!-- TANGGAL Awal-->
-                                                    <div class="col-xs-12">
-                                                        <label>Nama tenant</label>
-                                                        <select name="tenant_id" id="tenant_id" class="form-control">
-                                                            <option value="">Pilih Tenant</option>
-                                                            <?php
-                                                            $q = mysqli_query($conn, "SELECT id, tenant_name FROM tenants ORDER BY tenant_name ASC");
-                                                            while ($t = mysqli_fetch_assoc($q)) {
-                                                                echo '<option value="'.$t['id'].'">'.$t['tenant_name'].'</option>';
-                                                            }
-                                                            ?>
-                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -214,77 +140,18 @@ require_once 'auth.php';
                             </div>
                         </div>
 
-                        <!-- Report Payment Tenant -->
+                        <!-- Per Tenant -->
                         <div class="row">
-                            <!-- All Tenant -->
-                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                <div class="panel tenant-form">
-                                    <div class="panel-heading" style="background-color: #26B99A; color:white;">
-                                        <i class="fa fa-file-text"></i>
-                                        Laporan Absensi Semua Tenant
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="panel panel-primary tenant-form" >
+                                    <div class="panel-heading">
+                                        <i class="fa fa-file-text"></i>&nbsp;
+                                        Per-Tenant
                                     </div>
                                     <div class="panel-body">
                                         <form
                                             method="POST"
-                                            action="report/report_payment_tenant_all.php" target="_blank"
-                                        >
-                                            <input
-                                                type="hidden"
-                                                name="tenant_id"
-                                                value="<?php echo $tenant_id; ?>"
-                                            />
-
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <!-- TANGGAL Awal-->
-                                                    <div class="col-xs-6">
-                                                        <label>Tanggal Awal</label>
-                                                        <input
-                                                        type="date"
-                                                        name="first_date"
-                                                        class="form-control"
-                                                        required
-                                                        />
-                                                    </div>
-                                                    
-                                                    <!-- TANGGAL Akhir-->
-                                                    <div class="col-xs-6">
-                                                        <label>Tanggal Akhir</label>
-                                                        <input
-                                                            type="date"
-                                                            name="last_date"
-                                                            class="form-control"
-                                                            required
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            
-                                            <button
-                                                type="submit"
-                                                class="btn btn-success btn-block btn-sm"
-                                            >
-                                                Lihat PDF &nbsp;<i
-                                                    class="fa fa-file-pdf-o"
-                                                ></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Per Tenant -->
-                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                <div class="panel tenant-form" >
-                                    <div class="panel-heading" style="background-color: #26B99A; color:white;">
-                                        <i class="fa fa-file-text"></i>
-                                        Laporan Absensi Per-Tenant
-                                    </div>
-                                    <div class="panel-body">
-                                        <form
-                                            method="POST"
-                                            action="report/report_presence_one.php" target="_blank"
+                                            action="report/report_payment_electric_one.php" target="_blank"
                                         >
                                             <input
                                                 type="hidden"

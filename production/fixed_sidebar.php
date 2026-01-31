@@ -56,8 +56,14 @@
                                 ><i class="fa fa-users"></i> Tenant</a>
                         </li>
                         <li>
-                            <a href="report.php"
-                                ><i class="fa fa-file-text"></i> laporan</a>
+                            <a>
+                                <i class="fa fa-file-text"></i> Laporan <span class="fa fa-chevron-down"></span>
+                            </a>
+                            <ul class="nav child_menu">
+                                <li><a href="report_presence.php"><i class="fa fa-file-text"></i>&nbsp;Absensi</a></li>
+                                <li><a href="report_tenant.php"><i class="fa fa-file-text"></i>&nbsp;Pembayaran Tenant</a></li>
+                                <li><a href="report_electric.php"><i class="fa fa-file-text"></i>&nbsp;Pembayaran Air & Listik</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
