@@ -42,11 +42,11 @@
             >
                 <div class="menu_section">
                     <ul class="nav side-menu">
-                        <li>
+                        <!-- <li>
                             <a href="dashboard.php"
                                 ><i class="fa fa-dashboard"></i> Dashboard
                             </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="registration.php"
                                 ><i class="fa fa-edit"></i> Pendaftaran Tenant</a>

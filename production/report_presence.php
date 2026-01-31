@@ -11,7 +11,8 @@ require_once 'auth.php';
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <title>Gentelella Alela! |</title>
+        <title>Laporan Absensi || Kantin PISS</title>
+        <link rel="icon" type="image/png" href="images/icon.png" />
 
         <!-- Bootstrap -->
         <link

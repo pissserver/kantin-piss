@@ -1,28 +1,32 @@
 <?php
 include 'connection.php';
+session_start();
+
+// Fungsi format rupiah
+function format_rupiah($angka){
+    return 'Rp ' . number_format($angka, 0, ',', '.');
+}
 
 $tenant_id = $_POST['tenant_id'];
 $page      = isset($_POST['page']) ? (int)$_POST['page'] : 1;
 
-// PAGINATION
+// Pagination
 $limit = 5;
 $page  = ($page < 1) ? 1 : $page;
 $start = ($page - 1) * $limit;
 
-// TOTAL DATA
-$total_q = mysqli_query($conn, "
-    SELECT COUNT(*) AS total 
-    FROM tenant_payments 
-    WHERE tenant_id = '$tenant_id'
-");
+// Total data
+$total_q = mysqli_query($conn, "SELECT COUNT(*) AS total FROM tenant_payments WHERE tenant_id = '$tenant_id'");
 $total_data = mysqli_fetch_assoc($total_q)['total'];
 $total_page = ceil($total_data / $limit);
 
-// DATA
+// Ambil data
 $query = mysqli_query($conn, "
-    SELECT * FROM tenant_payments
-    WHERE tenant_id = '$tenant_id'
-    ORDER BY payment_date DESC
+    SELECT tp.*, t.tenant_name
+    FROM tenant_payments tp
+    JOIN tenants t ON tp.tenant_id = t.id
+    WHERE tp.tenant_id = '$tenant_id'
+    ORDER BY tp.payment_date DESC
     LIMIT $start, $limit
 ");
 
@@ -42,14 +46,15 @@ $no = $start + 1;
     <tbody>
         <?php if ($total_data == 0) { ?>
             <tr>
-                <td colspan="4" style="text-align:center;">
-                    Tidak ada data
-                </td>
+                <td colspan="5" style="text-align:center;">Tidak ada data</td>
             </tr>
         <?php } else { ?>
             <?php while ($row = mysqli_fetch_assoc($query)) {
                 $status = strtolower($row['status_payment']);
                 setlocale(LC_TIME, 'id_ID.utf8', 'id_ID');
+
+                // URL ke file print
+                $full_url = 'http://192.168.2.216/kantin-piss/production/payment_tenant_print_rawbt.php?payment_id='.$row['id'];
             ?>
             <tr>
                 <td align="center" style="vertical-align: middle;"><?php echo $no++; ?></td>
@@ -61,15 +66,14 @@ $no = $start + 1;
                 </td>
                 <td align="center" style="vertical-align: middle;">
                     <span class="label <?php echo ($status == 'lunas') ? 'label-success' : 'label-danger'; ?>"
-                    style="text-transform:capitalize;">
-                    <?php echo $row['status_payment']; ?>
+                          style="text-transform:capitalize;">
+                        <?php echo $row['status_payment']; ?>
                     </span>
                 </td>
-                <td align="center" style="vertical-align: middle;">
-                    <a href="intent://print/payment_tenant_print_rawbt.php?payment_id=<?php echo $row['id']; ?>#Intent;scheme=rawbt;package=ru.a402d.rawbtprinter;type=text/plain;end;"
-                    class="btn btn-primary btn-xs"
-                    style="padding:5px 10px; border-radius:20px;">
-                    <i class="fa fa-print"></i> Cetak
+                <td align="center">
+                    <a href="intent://print/#Intent;scheme=rawbt;package=ru.a402d.rawbtprinter;S.url=<?php echo urlencode($full_url); ?>;end"
+                       class="btn btn-primary btn-xs">
+                        <i class="fa fa-print"></i> Cetak
                     </a>
                 </td>
             </tr>
@@ -78,27 +82,21 @@ $no = $start + 1;
     </tbody>
 </table>
 
-<!-- PAGINATION -->
+<!-- Pagination -->
 <?php if ($total_page > 1) { ?>
 <nav style="text-align:center;">
     <ul class="pagination pagination-sm payment-tenant-pagination">
-
         <li class="<?php echo ($page <= 1) ? 'disabled' : ''; ?>">
             <a href="#" data-page="<?php echo $page - 1; ?>">&laquo;</a>
         </li>
-
         <?php for ($i = 1; $i <= $total_page; $i++) { ?>
             <li class="<?php echo ($page == $i) ? 'active' : ''; ?>">
-                <a href="#" data-page="<?php echo $i; ?>">
-                    <?php echo $i; ?>
-                </a>
+                <a href="#" data-page="<?php echo $i; ?>"><?php echo $i; ?></a>
             </li>
         <?php } ?>
-
         <li class="<?php echo ($page >= $total_page) ? 'disabled' : ''; ?>">
             <a href="#" data-page="<?php echo $page + 1; ?>">&raquo;</a>
         </li>
-
     </ul>
 </nav>
 <?php } ?>

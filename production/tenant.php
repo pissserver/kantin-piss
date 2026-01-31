@@ -82,7 +82,8 @@ require_once 'auth.php';
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <title>Gentelella Alela! |</title>
+        <title>Tenant || Kantin PISS</title>
+        <link rel="icon" type="image/png" href="images/icon.png" />
 
         <!-- Bootstrap -->
         <link
@@ -174,6 +175,10 @@ require_once 'auth.php';
                                             <i class="fa fa-user"></i>
                                             <?php echo $row['tenant_owner']; ?>
                                         </div>
+                                        <div class="tenant-owner">
+                                            <i class="text-<?php echo $row['status'] == 'active' ? 'success' : 'danger'; ?> fa fa-<?php echo $row['status'] == 'active' ? 'check-circle' : 'times-circle'; ?>"></i>
+                                            <?php echo $row['status']; ?>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -184,10 +189,26 @@ require_once 'auth.php';
                                         <?php echo date("d M Y", strtotime($row['registration_date'])); ?>
                                     </span>
 
-                                    <a href="tenant_detail.php?id=<?php echo $row['id']; ?>"
-                                    class="btn btn-primary btn-xs" style="padding: 5px 10px; border-radius: 20px;">
-                                        <i class="fa fa-search"></i>&nbsp; Detail
-                                    </a>
+                                    <?php 
+                                    $status = $row['status'];
+                                    if ($status == 'active') { ?>
+                                        <a href="tenant_action.php?tenant_id=<?php echo $row['id']; ?>&action=deactivate"
+                                        class="btn btn-danger btn-xs" style="padding: 5px 10px; border-radius: 20px;">
+                                            <i class="fa fa-times-circle"></i>&nbsp; Nonaktifkan
+                                        </a>
+                                    <?php } else { ?>
+                                        <a href="tenant_action.php?tenant_id=<?php echo $row['id']; ?>&action=activate"
+                                        class="btn btn-success btn-xs" style="padding: 5px 10px; border-radius: 20px;">
+                                            <i class="fa fa-check-circle"></i>&nbsp; Aktifkan
+                                        </a>
+                                    <?php } ?>
+
+                                    <?php if ($status == 'active') { ?>
+                                        <a href="tenant_detail.php?id=<?php echo $row['id']; ?>"
+                                        class="btn btn-primary btn-xs" style="padding: 5px 10px; border-radius: 20px;">
+                                            <i class="fa fa-info-circle"></i>&nbsp; Detail
+                                        </a>
+                                    <?php } ?>
                                 </div>
 
                             </div>
