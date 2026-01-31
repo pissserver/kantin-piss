@@ -44,5 +44,5 @@ $_SESSION['user_id']  = $user['id'];
 $_SESSION['username'] = $user['username'];
 $_SESSION['login'] = true;
 
-header("Location: dashboard.php");
+header("Location: registration.php");
 exit;
