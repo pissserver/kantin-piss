@@ -23,144 +23,85 @@ if (!$query) {
 ob_start();
 ?>
 
-
 <style>
-    body {
-        font-family: Arial;
-        font-size: 11px;
-    }
-
-    .header {
-        text-align: center;
-        margin-bottom: 10px;
-    }
-
-    .print-date {
-        text-align: right;
-        font-size: 10px;
-        margin-bottom: 5px;
-    }
-
-    h3 {
-        margin: 0;
-        margin-top: 30px;
-    }
-
-    h4 {
-        margin: 3px 0 10px 0;
-        font-weight: normal;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 8px;
-        table-layout: fixed;
-        margin-left: 0;
-        margin-right: 0;
-    }
-
-    th, td {
-        border: 1px solid #000;
-        padding: 5px;
-    }
-
-    th {
-        background-color: #f0f0f0;
-        text-align: center;
-    }
-
-    .center {
-        text-align: center;
-    }
-
-    .signature {
-        width: 100%;
-        margin-top: 40px;
-    }
-
-    .signature td {
-        border: none;
-        text-align: center;
-        width: 50%;
-    }
-
-    .footer {
-        text-align: center;
-        font-size: 10px;
-        margin-top: 5px;
-    }
+body { font-family: Arial; font-size: 11px; }
+.header { text-align: center; margin-bottom: 10px; }
+.print-date { text-align: right; font-size: 10px; margin-bottom: 5px; }
+table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+th, td { border: 1px solid #000; padding: 5px; }
+th { background: #f0f0f0; text-align: center; }
+.center { text-align: center; }
+.signature td { border: none; text-align: center; width: 50%; }
+.footer { text-align: center; font-size: 10px; }
 </style>
 
-<!-- HEADER -->
 <div class="print-date">
     Dicetak: <?= date('d M Y'); ?>
 </div>
 
 <div class="header">
-    <h3>LAPORAN ABSENSI - SEMUA TENANT</h3>
+    <h3>LAPORAN ABSENSI TENANT</h3>
     <h4>(PASAR INDUK SURABAYA SIDOTOPO)</h4>
 </div>
 
 <p>
     Periode:
-    <b><?= date("d M Y", strtotime($first_date)); ?></b>
+    <b><?= date('d M Y', strtotime($first_date)); ?></b>
     s/d
-    <b><?= date("d M Y", strtotime($last_date)); ?></b>
+    <b><?= date('d M Y', strtotime($last_date)); ?></b>
 </p>
 
 <table>
-    <tr>
-        <th width="5%">No</th>
-        <th width="40%">Nama Tenant</th>
-        <th width="25%">Tanggal</th>
-        <th width="30%">Status</th>
-    </tr>
+<tr>
+    <th width="5%">No</th>
+    <th width="40%">Nama Tenant</th>
+    <th width="25%">Tanggal</th>
+    <th width="30%">Status</th>
+</tr>
 
 <?php
 $no = 1;
 $line = 0;
+
 while ($row = mysqli_fetch_assoc($query)) {
     $line++;
 
-    // PAGE BREAK SETIAP 25 BARIS
     if ($line % 25 == 0) {
-        echo '</table><pagebreak /><table>';
-        echo '
-        <tr>
-            <th>No</th>
-            <th>Nama Tenant</th>
-            <th>Tanggal</th>
-            <th>Status</th>
-        </tr>';
+        echo '</table>';
+        echo '<page />';
+        echo '<table>
+            <tr>
+                <th width="5%">No</th>
+                <th width="40%">Nama Tenant</th>
+                <th width="25%">Tanggal</th>
+                <th width="30%">Status</th>
+            </tr>';
     }
 ?>
-    <tr>
-        <td class="center"><?= $no++; ?></td>
-        <td><?= $row['tenant_name']; ?></td>
-        <td class="center"><?= date("d M Y", strtotime($row['presence_date'])); ?></td>
-        <td class="center"><?= $row['status_presence']; ?></td>
-    </tr>
+<tr>
+    <td class="center"><?= $no++; ?></td>
+    <td><?= $row['tenant_name']; ?></td>
+    <td class="center"><?= date('d M Y', strtotime($row['presence_date'])); ?></td>
+    <td class="center" style="text-transform: capitalize"><?= $row['status_presence']; ?></td>
+</tr>
 <?php } ?>
-</table><br><br>
-
-<!-- TANDA TANGAN -->
-<table class="signature">
-    <tr>
-        <td>
-            Mengetahui,<br>
-            Manajemen<br><br><br><br>
-            <b>( ____________________ )</b>
-        </td>
-        <td>
-            Surabaya, <?= date('d M Y'); ?><br>
-            Tim Kantin<br><br><br><br>
-            <b>( ____________________ )</b>
-        </td>
-    </tr>
 </table>
 
-<!-- FOOTER -->
+<br><br>
+
+<table class="signature">
+<tr>
+    <td>
+        Mengetahui,<br>Manajemen<br><br><br><br>
+        ( ____________________ )
+    </td>
+    <td>
+        Surabaya, <?= date('d M Y'); ?><br>Tim Kantin<br><br><br><br>
+        ( ____________________ )
+    </td>
+</tr>
+</table>
+
 <page_footer>
     <div class="footer">
         Halaman [[page_cu]] / [[page_nb]]
@@ -170,12 +111,8 @@ while ($row = mysqli_fetch_assoc($query)) {
 <?php
 $html = ob_get_clean();
 
-try {
-    $pdf = new HTML2PDF('P', 'A4', 'en');
-    $pdf->setDefaultFont('Arial');
-    $pdf->writeHTML($html);
-    $pdf->Output('laporan_absensi_tenant.pdf', 'I');
-} catch (HTML2PDF_exception $e) {
-    echo $e;
-}
+$pdf = new HTML2PDF('P', 'A4', 'en');
+$pdf->setDefaultFont('Arial');
+$pdf->writeHTML($html);
+$pdf->Output('laporan_absensi_tenant.pdf', 'I');
 exit;
