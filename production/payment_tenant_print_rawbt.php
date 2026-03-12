@@ -23,8 +23,8 @@ $data = mysqli_fetch_assoc($q);
     <style>
         body {
             width: 58mm;
-            font-family: monospace;
-            font-size: 12px;
+            font-family: Open Sans, sans-serif;
+            font-size: 14px;
         }
         .center { text-align: center; }
         .line { border-top: 1px dashed #000; margin: 5px 0; }
