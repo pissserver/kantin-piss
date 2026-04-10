@@ -44,5 +44,15 @@ $_SESSION['user_id']  = $user['id'];
 $_SESSION['username'] = $user['username'];
 $_SESSION['login'] = true;
 
+if (isset($_POST['remember'])) {
+
+    setcookie("username", $_POST['username'], time() + (86400 * 30), "/");
+    setcookie("password", $_POST['password'], time() + (86400 * 30), "/");
+} else {
+
+    setcookie("username", "", time() - 3600, "/");
+    setcookie("password", "", time() - 3600, "/");
+}
+
 header("Location: registration.php");
 exit;
