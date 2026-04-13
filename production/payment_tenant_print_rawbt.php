@@ -74,6 +74,28 @@ $data = mysqli_fetch_assoc($q);
                 max-width: 58mm;
                 padding: 5px;
                 box-shadow: none;
+
+                font-size: 18px;
+                /* 🔥 BESARKAN GLOBAL */
+            }
+
+            .center {
+                font-size: 20px;
+                /* Judul lebih besar */
+                font-weight: bold;
+            }
+
+            table {
+                font-size: 16px;
+                /* 🔥 BESARKAN ISI */
+            }
+
+            td {
+                padding: 2px 0;
+            }
+
+            .line {
+                margin: 10px 0;
             }
         }
 
