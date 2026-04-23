@@ -79,6 +79,33 @@ body {
     100%{transform:translate(-800px,800px) rotate(45deg); opacity:0;}
 }
 
+/* ===== MULTI SHOOTING STAR ===== */
+.shoot-many {
+    position:absolute;
+    width:2px;
+    height:100px;
+    background:linear-gradient(-45deg,#fff,transparent);
+    transform:rotate(45deg);
+    opacity:0;
+    pointer-events:none;
+    filter: drop-shadow(0 0 6px #fff);
+    animation: shootMany linear forwards;
+}
+
+@keyframes shootMany {
+    0% {
+        opacity:0;
+        transform: translate(0,0) rotate(45deg);
+    }
+    10% {
+        opacity:1;
+    }
+    100% {
+        transform: translate(-1000px,1000px) rotate(45deg);
+        opacity:0;
+    }
+}
+
 /* ===== PLANET + RING ===== */
 .planet {
     position:absolute;
@@ -363,6 +390,36 @@ document.addEventListener("mousemove", e => {
         trail.remove();
     }, 600);
 });
+
+// ===== SHOOTING STAR MASSIVE =====
+function createShootingStar() {
+    const star = document.createElement("div");
+    star.className = "shoot-many";
+
+    // posisi random
+    star.style.top = Math.random() * window.innerHeight + "px";
+    star.style.left = Math.random() * window.innerWidth + "px";
+
+    // ukuran random
+    const size = Math.random() * 2 + 1;
+    star.style.width = size + "px";
+    star.style.height = (80 + Math.random() * 120) + "px";
+
+    // durasi random
+    const duration = Math.random() * 2 + 2;
+    star.style.animationDuration = duration + "s";
+
+    document.body.appendChild(star);
+
+    setTimeout(() => {
+        star.remove();
+    }, duration * 1000);
+}
+
+// spawn terus menerus
+setInterval(() => {
+    createShootingStar();
+}, 300); // makin kecil = makin banyak
 </script>
 
 </body>
